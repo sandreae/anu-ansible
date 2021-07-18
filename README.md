@@ -4,7 +4,7 @@ Installs dependencies and configures services required for running your very own
 
 See [more information](https://autonomousnoiseunit.co.uk) about ANU, read the [code](https://github.com/noiseorchestra/noise-audio-web) or visit [Noise Orchestra](https://noiseorchestra.org/).
 
-**WARNING** *if you are installing on an existing RPi system, be aware that config files will be overwritten during the installation process. These include `etc/hosts`, `/boot/config.txt` and `/etc/modules`
+**WARNING** *if you are installing on an existing RPi system, be aware that config files will be overwritten during the installation process. These include `etc/hosts`, `/boot/config.txt` and `/etc/modules`*
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ See [more information](https://autonomousnoiseunit.co.uk) about ANU, read the [c
 - Raspberry Pi OS or similar with default `pi` user and ssh enabled
 - hifiberry or pisound soundcards
 - ANU custom HAT (contact noiseorchestramcr AT gmail . com if you want one)
-- build the version of JackTrip you want to use and replace the existing build (v1.3.0) in `files/jacktrip` with your own
+- build the version of JackTrip you want to use and replace the existing build (v1.3.0) in `files/jacktrip` with your own. You could use [this](https://github.com/sandreae/jacktrip-builder).
 
 ## Config
 
