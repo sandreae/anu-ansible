@@ -12,6 +12,7 @@ See [more information](https://autonomousnoiseunit.co.uk) about ANU, read the [c
 - Raspberry Pi OS or similar with default `pi` user and ssh enabled
 - hifiberry or pisound soundcards
 - ANU custom HAT (contact noiseorchestramcr AT gmail . com if you want one)
+- build the version of JackTrip you want to use and replace the existing build (v1.3.0) in `files/jacktrip` with your own
 
 ## Config
 
