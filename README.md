@@ -1,10 +1,8 @@
 # Autonomous Noise Unit ansible playbooks
 
-[https://autonomousnoiseunit.co.uk](https://autonomousnoiseunit.co.uk)  
-[git](https://github.com/noiseorchestra/noise-audio-web)  
-[noise orchestra](https://noiseorchestra.org/)  
-
 Installs dependencies and configures services required for running your very own ANU.
+
+See [more information](https://autonomousnoiseunit.co.uk) about ANU, read the [code](https://github.com/noiseorchestra/noise-audio-web) or visit [Noise Orchestra](https://noiseorchestra.org/).
 
 **WARNING** *if you are installing on an existing RPi system, be aware that config files will be overwritten during the installation process. These include `etc/hosts`, `/boot/config.txt` and `/etc/modules`
 
