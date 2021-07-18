@@ -1,8 +1,8 @@
 # Autonomous Noise Unit ansible playbooks
 
-[https://autonomousnoiseunit.co.uk](https://autonomousnoiseunit.co.uk)
-[git](https://github.com/noiseorchestra/noise-audio-web)
-[noise orchestra](https://noiseorchestra.org/)
+[https://autonomousnoiseunit.co.uk](https://autonomousnoiseunit.co.uk)  
+[git](https://github.com/noiseorchestra/noise-audio-web)  
+[noise orchestra](https://noiseorchestra.org/)  
 
 Installs dependencies and configures services required for running your very own ANU.
 
