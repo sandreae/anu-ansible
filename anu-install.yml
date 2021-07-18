@@ -1,0 +1,90 @@
+---
+- name: Install anu
+  hosts: anu
+  become: yes
+  vars_files:
+  - vars/default.yml
+
+  tasks:
+    - name: Install dependencies
+      apt:
+        pkg:
+        - git
+        - jackd2
+        - i2c-tools
+        - python3-pil
+        - python3-dev
+        - python3-pip 
+        - python3-setuptools 
+        - python3-rpi.gpio
+        - python-smbus
+        - libopenjp2-7-dev
+        - libjack-jackd2-dev
+        update_cache: yes
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Configure jackd realtime priority
+      command: cp /etc/security/limits.d/audio.conf.disabled /etc/security/limits.d/audio.conf
+
+    - name: Copy module file
+      copy:
+        src: files/modules
+        dest: /etc/modules
+
+    - name: Copy JackTrip binary
+      copy:
+        src: files/jacktrip
+        dest: /usr/local/bin/jacktrip
+        mode: u+rwx,g+rx,o+rx
+
+    - name: Download and unarchive jackmeter
+      ansible.builtin.unarchive:
+        src: https://www.aelius.com/njh/jackmeter/jackmeter-0.4.tar.gz
+        dest: /home/{{user}}/
+        remote_src: yes
+        
+    - name: Install jackmeter
+      command: "{{ item }}"
+      with_items:
+      - ./configure
+      - make
+      - make install
+      args:
+        chdir: jackmeter-0.4/
+
+    - name: Template darkice config file
+      template:
+        src: templates/system/config.txt.j2
+        dest: /boot/config.txt
+        
+    - name: Git checkout anu
+      git:
+        repo: 'https://github.com/noiseorchestra/autonomous-noise-unit.git'
+        dest: /home/{{user}}/autonomous-noise-unit
+        version: 1.0.1
+      become: yes
+      become_user: pi
+
+    - name: Install noisebox python dependencies
+      command: python3 -m pip install -r /home/{{user}}/autonomous-noise-unit/requirements.txt
+      become: yes
+      become_user: pi
+
+    - name: Template ANU config file
+      template:
+        src: templates/noisebox/config.ini.j2
+        dest: /home/{{user}}/autonomous-noise-unit/config.ini
+      become: yes
+      become_user: pi
+        
+    - name: Copy service files
+      copy:
+        src: files/noisebox.service
+        dest: "/etc/systemd/system/"
+
+    - name: Start and enable services
+      command: "{{ item }}"
+      with_items:
+      - systemctl start noisebox.service
+      - systemctl enable noisebox.service

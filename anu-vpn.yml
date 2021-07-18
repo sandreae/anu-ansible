@@ -1,0 +1,22 @@
+---
+- name: Setup and start vpncloud service
+  hosts: anu
+  become: yes
+  vars_files:
+  - vars/default.yml
+
+  tasks:
+    - name: Install vpncloud
+      apt:
+        deb: https://github.com/dswd/vpncloud/releases/download/v2.2.0/vpncloud_2.2.0_armhf.deb
+
+    - name: Template vpncloud config
+      template:
+        src: templates/vpncloud/vpncloud.yml.j2
+        dest: /etc/vpncloud/anuweb.net
+    
+    - name: Start and enable vpncloud service
+      command: "{{ item }}"
+      with_items:
+      - systemctl start vpncloud@anuweb
+      - systemctl enable vpncloud@anuweb

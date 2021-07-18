@@ -1,0 +1,48 @@
+#################################################
+# DO Community Playbooks: Initial Server Setup
+#################################################
+---
+- hosts: anu
+  become: yes
+  vars_files:
+    - vars/default.yml
+
+  tasks:
+    # Sudo Group Setup
+    - name: Make sure we have a 'sudo' group
+      group:
+        name: sudo
+        state: present
+
+    - name: Allow 'sudo' group to have passwordless sudo
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%sudo'
+        line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+        validate: '/usr/sbin/visudo -cf %s'
+
+    # User + Key Setup
+    - name: Create a new regular user with sudo privileges
+      user:
+        name: "{{ user }}"
+        state: present
+        groups: sudo, audio
+        append: true
+        create_home: true
+        shell: /bin/bash
+        update_password: always
+        password: "{{ password|password_hash('sha512') }}"
+
+    - name: Set authorized key for remote user
+      authorized_key:
+        user: "{{ user }}"
+        state: present
+        key: "{{ copy_local_key }}"
+
+    - name: Disable password authentication for root
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        state: present
+        regexp: '^#?PermitRootLogin'
+        line: 'PermitRootLogin prohibit-password'
