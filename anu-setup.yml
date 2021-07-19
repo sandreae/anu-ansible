@@ -46,3 +46,17 @@
         state: present
         regexp: '^#?PermitRootLogin'
         line: 'PermitRootLogin prohibit-password'
+
+    - name: Copy custom hosts file
+      copy:
+        src: files/hosts
+        dest: /etc/hosts
+
+    - name: Copy custom hostname file
+      copy:
+        src: files/hostname
+        dest: /etc/hostname
+        
+    - name: Reboot the rpi
+      reboot:
+        reboot_timeout: 30
