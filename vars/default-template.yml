@@ -4,10 +4,8 @@ user: pi
 password: BadPassWord88
 copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
 sys_packages: [ 'apt-transport-https', 'ca-certificates', 'curl', 'git', 'software-properties-common', 'ufw' ]
-audio_hat: pisound
 
 # vpncloud config
-vpn_ip: 10.0.0.1
 vpn_password: BadPassWord88
 vpn_remote_host: 234.234.234.234
 vpn_remote_host_port: 3210

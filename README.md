@@ -17,10 +17,10 @@ See [more information](https://autonomousnoiseunit.co.uk) about ANU, read the [c
 ## Config
 
 - create a `default.yml` file in the `vars/` folder based on the `default-template.yml` and populate with your config values
-- you also need to edit or create your ansible hosts file at `/etc/ansible/hosts` adding the address of your RPi, for example:
+- you also need to edit or create your ansible hosts file at `/etc/ansible/hosts` adding the address to your RPi and the host vars `audio_hat` ("hifiberry-dacplusadc" or "pisound") and `vpn_ip` (optional). An example would be:
 ```
 [anu]
-raspberrypi.local
+raspberrypi.local audio_hat=pisound vpn_ip=10.0.0.201
 ```
 
 ## Install
