@@ -24,8 +24,8 @@
       environment:
         DEBIAN_FRONTEND: noninteractive
 
-    - name: Configure jackd realtime priority
-      command: cp /etc/security/limits.d/audio.conf.disabled /etc/security/limits.d/audio.conf
+    # used to set jackd realtime prio here but now it seems to be set by default
+    # cp /etc/security/limits.d/audio.conf.disabled /etc/security/limits.d/audio.conf
 
     - name: Copy module file
       copy:
