@@ -1,6 +1,6 @@
 ---
 - name: Setup and start vpncloud service
-  hosts: anu
+  hosts: "{{ variable_host | default('anu-local') }}"
   become: yes
   vars_files:
   - vars/default.yml

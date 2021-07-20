@@ -2,7 +2,7 @@
 # DO Community Playbooks: Initial Server Setup
 #################################################
 ---
-- hosts: anu
+- hosts: "{{ variable_host | default('anu-local') }}"
   become: yes
   vars_files:
     - vars/default.yml
@@ -57,6 +57,3 @@
         src: files/hostname
         dest: /etc/hostname
         
-    - name: Reboot the rpi
-      reboot:
-        reboot_timeout: 30
