@@ -84,7 +84,7 @@
         dest: "/etc/systemd/system/"
 
     - name: Start and enable services
-      command: "{{ item }}"
-      with_items:
-      - systemctl start noisebox.service
-      - systemctl enable noisebox.service
+      service:
+        name: noisebox
+        state: started
+        enabled: yes
