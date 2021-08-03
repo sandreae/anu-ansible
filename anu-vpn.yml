@@ -14,9 +14,9 @@
       template:
         src: templates/vpncloud/vpncloud.yml.j2
         dest: /etc/vpncloud/anuweb.net
-    
+
     - name: Start and enable vpncloud service
-      command: "{{ item }}"
-      with_items:
-      - systemctl start vpncloud@anuweb
-      - systemctl enable vpncloud@anuweb
+      service:
+        name: vpncloud@anuweb
+        state: started
+        enabled: yes
