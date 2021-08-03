@@ -47,13 +47,12 @@
         regexp: '^#?PermitRootLogin'
         line: 'PermitRootLogin prohibit-password'
 
-    - name: Copy custom hosts file
-      copy:
-        src: files/hosts
+    - name: Template hosts file
+      template:
+        src: templates/system/hosts.j2
         dest: /etc/hosts
 
-    - name: Copy custom hostname file
-      copy:
-        src: files/hostname
+    - name: Template hostname file
+      template:
+        src: templates/system/hostname.j2
         dest: /etc/hostname
-        
