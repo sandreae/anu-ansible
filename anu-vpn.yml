@@ -15,8 +15,12 @@
         src: templates/vpncloud/vpncloud.yml.j2
         dest: /etc/vpncloud/anuweb.net
 
-    - name: Start and enable vpncloud service
+    - name: Enable new vpncloud service
       service:
         name: vpncloud@anuweb
-        state: started
         enabled: yes
+
+    - name: Disable old vpncloud service
+      service:
+        name: vpncloud@mynet
+        enabled: no
