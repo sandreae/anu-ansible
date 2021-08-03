@@ -1,4 +1,5 @@
 [global_tags]
+  owner = "{{ owner }}"
 [agent]
   interval = "10s"
   round_interval = true
@@ -38,10 +39,10 @@
   interfaces = ["eth0"]
 [[inputs.netstat]]
 [[inputs.ping]]
-  urls = ["www.google.com"] # required
+  urls = ["www.autonomousnoiseunit.co.uk"] # required
   count = 4
   interface = "eth0"
-  name_override = "google_ping"
+  name_override = "ping"
 [[inputs.dns_query]]
   servers = ["8.8.8.8"]
   domains = ["."]
