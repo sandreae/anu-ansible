@@ -1,0 +1,12 @@
+---
+- name: Purge a v1 ANU of trouble before configuring for v2
+  hosts: "{{ variable_host | default('anu-local') }}"
+  become: yes
+  vars_files:
+  - vars/default.yml
+
+  tasks:
+    - name: Delete vpncloud apt package source
+      file:
+        state: absent
+        path: /etc/apt/sources.list.d/vpncloud.list
