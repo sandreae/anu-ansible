@@ -1,0 +1,52 @@
+---
+- name: Install and configure telegraf client
+  hosts: "{{ variable_host | default('anu-local') }}"
+  become: yes
+  vars_files:
+  - vars/default.yml
+
+  tasks:
+    - name: Install dependencies
+      apt:
+        pkg:
+        - apt-transport-https
+        update_cache: yes
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Telegraf repository key
+      apt_key:
+        url: https://repos.influxdata.com/influxdb.key
+        keyring: /etc/apt/trusted.gpg.d/telegraf.gpg
+        state: present
+
+    - name: Telegraf repository
+      apt_repository:
+        repo: "deb https://repos.influxdata.com/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+        filename: telegraf
+      register: repo_telegraf
+
+    - name: Update cache
+      apt:
+        update_cache: yes
+      when: repo_telegraf.changed
+      
+    - name: Telegraf packages
+      apt:
+        name:
+          - telegraf
+        state: present
+      register: install_telegraf
+
+    - name: Template configfile
+      template:
+        src: templates/telegraf/telegraf.conf.j2
+        dest: /etc/telegraf/telegraf.conf
+        
+    - name: Enable and start Telegraf service
+      service:
+        name: telegraf
+        state: started
+        enabled: yes
+      register: start_telegraf

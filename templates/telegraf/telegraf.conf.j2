@@ -1,0 +1,56 @@
+[global_tags]
+[agent]
+  interval = "10s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  hostname = ""
+  omit_hostname = false
+[[outputs.influxdb]]
+  urls = ["{{ influxdb_url }}"]
+  database = "rpi_monitoring"
+  username = "{{ telegraf_username }}"
+  password = "{{ telegraf_password }}"
+[[inputs.cpu]]
+  percpu = true
+  totalcpu = true
+  collect_cpu_time = false
+  report_active = false
+[[inputs.disk]]
+  ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+[[inputs.mem]]
+[[inputs.swap]]
+[[inputs.file]]
+  files = ["/sys/class/thermal/thermal_zone0/temp"]
+  name_override = "cpu_temperature"
+  data_format = "value"
+  data_type = "integer"
+[[inputs.exec]]
+  commands = [ "/opt/vc/bin/vcgencmd measure_temp" ]
+  name_override = "gpu_temperature"
+  data_format = "grok"
+  grok_patterns = ["%{NUMBER:value:float}"]
+[[inputs.net]]
+  interfaces = ["eth0"]
+[[inputs.netstat]]
+[[inputs.ping]]
+  urls = ["www.google.com"] # required
+  count = 4
+  interface = "eth0"
+  name_override = "google_ping"
+[[inputs.docker]]
+  endpoint = "unix:///var/run/docker.sock"
+[[inputs.dns_query]]
+  servers = ["8.8.8.8"]
+  domains = ["."]
+  record_type = "A"
+  timeout = 10
+  name_override = "google_dns"
+[[inputs.kernel]]
+[[inputs.system]]
+[[inputs.processes]]
+[[inputs.diskio]]

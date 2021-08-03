@@ -12,3 +12,8 @@ vpn_remote_host_port: 3210
 
 # noisebox config
 hub_server_ip: 123.123.123.123
+
+# Telegraf config
+influxdb_url: http://123.123.123.123:1243
+telegraf_username: username
+telegraf_password: password
