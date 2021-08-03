@@ -62,7 +62,7 @@
       git:
         repo: 'https://github.com/noiseorchestra/autonomous-noise-unit.git'
         dest: /home/{{user}}/autonomous-noise-unit
-        version: 1.0.1
+        version: 2.0.0
       become: yes
       become_user: pi
 
