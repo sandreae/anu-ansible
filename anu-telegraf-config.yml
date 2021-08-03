@@ -1,0 +1,18 @@
+---
+- name: Update Telegraf config
+  hosts: "{{ variable_host | default('anu-local') }}"
+  become: yes
+  vars_files:
+  - vars/default.yml
+
+  tasks:
+    - name: Template configfile
+      template:
+        src: templates/telegraf/telegraf.conf.j2
+        dest: /etc/telegraf/telegraf.conf
+        
+    - name: Restart Telegraf service
+      service:
+        name: telegraf
+        state: restarted
+        enabled: yes
