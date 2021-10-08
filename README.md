@@ -12,7 +12,7 @@ See [more information](https://autonomousnoiseunit.co.uk) about ANU, read the [c
 - Raspberry Pi OS or similar with default `pi` user and ssh enabled
 - hifiberry or pisound soundcards
 - ANU custom HAT (contact noiseorchestramcr AT gmail . com if you want one)
-- build the version of JackTrip you want to use and replace the existing build (v1.3.0) in `files/jacktrip` with your own. You could use [this](https://github.com/sandreae/jacktrip-builder).
+- *optional* build the version of JackTrip you want to use and replace the existing build (v1.3.0) in `files/jacktrip` with your own. You could use [this](https://github.com/sandreae/jacktrip-builder).
 
 ## Config
 
@@ -27,23 +27,22 @@ Once `anu-setup.yml` has been run the RPi hostname will be changed to `anu` so t
 
 ## Install
 
-The default target host is `anu-local`, this can be changed at runtime by passing in `"variable_host=new-target-host"` with the `--extra-vars` flag.
-
-setup the RPi with required user and permissions copies ssh keys from default users home directory:
+Setup the RPi with required user and permissions, copies users local ssh public key, enables passwordless access. When you run this you will be asked for the SSH password, if you haven't changed it, it's the default for a fresh raspbian install `raspberry`.:
 `$ ansible-playbook anu-setup.yml -u pi -k`
 
-install dependencies and setup services for your ANU (hostname will have changed here):
+Install dependencies and setup services for your ANU:
 `$ ansible-playbook anu-install.yml -u pi`
 
-reboot your ANU:
+Reboot your ANU (after this your rpi hostname will have changed):
 `$ ansible-playbook anu-reboot.yml -u pi`
-
-target 
 
 #### optional
 
 Install and configure vpncloud for remote ANU access:
 `$ ansible-playbook anu-vpn.yml -u pi`
+
+Install and configure telegraf for collecting metrics:
+`$ ansible-playbook anu-telegraf.yml -u pi`
 
 #### Runtime target host
 
